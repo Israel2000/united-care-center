@@ -19,3 +19,11 @@ Compassionate, high-quality support services that help individuals live safely, 
 ## Website
 
 Open `index.html` in a browser, or enable GitHub Pages on the `main` branch to publish this site.
+
+## Security
+
+- Browser security headers are defined in `vercel.json` for Vercel deployments and `_headers` for Netlify-compatible hosting.
+- The site removes third-party font requests and uses local system fonts.
+- The contact form does not transmit data to a server; it opens the visitor's email app with an encoded, pre-addressed message.
+- The site supports automatic system light/dark colors and includes a persistent manual theme button.
+- Responsibility and security reporting instructions are published at `.well-known/security.txt`.

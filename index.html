@@ -4,13 +4,23 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="color-scheme" content="light dark" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; object-src 'none'; connect-src 'none'; upgrade-insecure-requests" />
+<meta http-equiv="X-Content-Type-Options" content="nosniff" />
+<meta name="referrer" content="no-referrer" />
+<meta name="format-detection" content="telephone=no" />
+<meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=()" />
 <link rel="icon" href="data:," />
-<script>document.documentElement.classList.add('js');</script>
+<script>
+document.documentElement.classList.add('js');
+(function(){
+  try {
+    var saved = localStorage.getItem('ucc-theme');
+    if(saved === 'light' || saved === 'dark') document.documentElement.setAttribute('data-theme', saved);
+  } catch(e) {}
+})();
+</script>
 <title>United Care Center — Support Today, Greater Independence Tomorrow</title>
 <meta name="description" content="United Care Center provides compassionate home & personal support, respite care, community-based skill building, and non-medical transportation." />
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,600;0,700;0,800;0,900;1,700&family=Nunito+Sans:ital,opsz,wght@0,6..12,400;0,6..12,600;0,6..12,700;1,6..12,400&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#ffffff; --bg-soft:#f2f7fb; --bg-warm:#fff8ec;
@@ -23,6 +33,7 @@
   --teal:#1f8fa3; --teal-soft:#e2f3f6;
   --purple:#5b2d8e; --purple-soft:#efe9f7;
   --card:#ffffff;
+  --footer-bg:#084f7a;
   --shadow:0 10px 30px rgba(11,79,122,.10);
   --radius:18px;
 }
@@ -38,11 +49,40 @@
     --teal:#4fc3d6; --teal-soft:#17363d;
     --purple:#b79ae0; --purple-soft:#2c2145;
     --card:#162b3d;
+    --footer-bg:#08131d;
     --shadow:0 10px 30px rgba(0,0,0,.35);
   }
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
+html[data-theme="dark"]{
+  --bg:#0e1c29; --bg-soft:#132635; --bg-warm:#1d2a1e;
+  --ink:#eef6fb; --ink-2:#c3d6e4; --muted:#9db4c6;
+  --line:#27455c;
+  --blue:#3aa8e0; --blue-dark:#8ecdf2; --blue-bright:#3aa8e0;
+  --gold:#f2b41f; --gold-soft:#3a3013;
+  --orange:#f08a4b; --orange-soft:#3d2716;
+  --green:#7cc96a; --green-soft:#1e3319;
+  --teal:#4fc3d6; --teal-soft:#17363d;
+  --purple:#b79ae0; --purple-soft:#2c2145;
+  --card:#162b3d;
+  --footer-bg:#08131d;
+  --shadow:0 10px 30px rgba(0,0,0,.35);
+}
+html[data-theme="light"]{
+  --bg:#ffffff; --bg-soft:#f2f7fb; --bg-warm:#fff8ec;
+  --ink:#17324a; --ink-2:#3d5a73; --muted:#5b7489;
+  --line:#dbe7ef;
+  --blue:#0b6fa8; --blue-dark:#084f7a; --blue-bright:#1290d6;
+  --gold:#e9a100; --gold-soft:#fdf0cd;
+  --orange:#e0681c; --orange-soft:#fdeee2;
+  --green:#3d8b2e; --green-soft:#e8f4e2;
+  --teal:#1f8fa3; --teal-soft:#e2f3f6;
+  --purple:#5b2d8e; --purple-soft:#efe9f7;
+  --card:#ffffff;
+  --footer-bg:#084f7a;
+  --shadow:0 10px 30px rgba(11,79,122,.10);
+}
 @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} *{transition:none!important} }
 body{margin:0;font-family:"Nunito Sans",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6;font-size:17px}
 h1,h2,h3,h4{font-family:"Nunito",system-ui,sans-serif;line-height:1.15;margin:0;color:var(--ink)}
@@ -55,7 +95,7 @@ button,[role="button"],select,summary,input:not([type="checkbox"],[type="radio"]
 .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
 
 /* Header */
-.topbar{background:var(--blue-dark);color:#fff;font-size:.92rem}
+.topbar{background:var(--footer-bg);color:#fff;font-size:.92rem}
 .topbar .wrap{display:flex;flex-wrap:wrap;gap:.4rem 1.5rem;align-items:center;justify-content:space-between;padding-top:.45rem;padding-bottom:.45rem}
 .topbar a{color:#fff;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;min-height:2rem}
 header.site{background:var(--bg);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:50}
@@ -70,6 +110,9 @@ nav.main a{display:inline-flex;align-items:center;min-height:2.75rem;padding:.45
 nav.main a:hover{background:var(--bg-soft);color:var(--ink)}
 nav.main a[aria-current="page"]{background:var(--blue);color:#fff}
 .menu-btn{display:none;margin-left:auto;background:var(--blue);color:#fff;border:0;border-radius:10px;padding:.6rem 1rem;font-family:"Nunito",sans-serif;font-weight:800;cursor:pointer;min-height:2.75rem}
+.theme-btn{display:inline-flex;align-items:center;justify-content:center;width:1.75rem;min-height:1.75rem;height:1.75rem;padding:0;margin-left:.45rem;border:1px solid rgba(255,255,255,.55);border-radius:999px;background:transparent;color:#fff;font-size:.75rem;line-height:1;cursor:pointer;vertical-align:middle}
+.theme-btn:hover{border-color:var(--blue)}
+.topbar-actions{display:inline-flex;align-items:center}
 @media (max-width:860px){
   .menu-btn{display:inline-flex;align-items:center}
   nav.main{margin-left:0;width:100%;display:none}
@@ -163,7 +206,7 @@ h2.title{font-size:clamp(1.6rem,3.5vw,2.2rem);font-weight:900;letter-spacing:-.0
 .checklist li::before{content:"✓";position:absolute;left:0;top:0;width:1.35rem;height:1.35rem;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center;font-size:.85rem;font-weight:900;line-height:1}
 
 /* CTA banner */
-.cta-banner{background:var(--blue-dark);color:#fff;border-radius:20px;padding:2rem;display:grid;grid-template-columns:1.3fr .7fr;gap:1.5rem;align-items:center}
+.cta-banner{background:var(--footer-bg);color:#fff;border-radius:20px;padding:2rem;display:grid;grid-template-columns:1.3fr .7fr;gap:1.5rem;align-items:center}
 @media (max-width:760px){ .cta-banner{grid-template-columns:1fr} }
 .cta-banner h2{color:#fff;font-size:1.7rem;font-weight:900}
 .cta-banner p{color:#d6eaf6;margin:.5rem 0 0}
@@ -185,7 +228,7 @@ form label:first-child{margin-top:0}
 form input,form select,form textarea{width:100%;padding:.7rem .85rem;border:1.5px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:inherit}
 form textarea{min-height:7rem;resize:vertical}
 .form-note{color:var(--muted);font-size:.92rem;margin-top:.7rem}
-footer{background:var(--blue-dark);color:#cfe6f3;margin-top:0}
+footer{background:var(--footer-bg);color:#cfe6f3;margin-top:0}
 footer .cols{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:1.8rem;padding:2.4rem 0 1.6rem}
 @media (max-width:760px){ footer .cols{grid-template-columns:1fr} }
 footer h3,footer h4{color:#fff}
@@ -197,12 +240,46 @@ footer ul a:hover{text-decoration:underline}
 .foot-brand img{width:56px;height:56px;object-fit:contain;background:#fff;border-radius:10px;padding:4px}
 .copyright{border-top:1px solid rgba(255,255,255,.2);padding:1rem 0 1.4rem;font-size:.9rem;display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;justify-content:space-between}
 .wave{height:10px;background:linear-gradient(90deg,var(--orange) 0 25%,var(--green) 25% 50%,var(--teal) 50% 75%,var(--blue-bright) 75% 100%)}
+@media (max-width:600px){
+  body{font-size:16px}
+  .wrap{padding-left:16px;padding-right:16px}
+  .topbar{font-size:.84rem}
+  .topbar .wrap{align-items:flex-start;gap:.25rem .75rem}
+  .topbar-actions{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:0 .5rem;width:100%}
+  .topbar-actions a{min-width:0;max-width:100%;min-height:1.8rem;font-size:.84rem}
+  .topbar-separator{display:none}
+  .topbar-actions a[href^="tel:"]{grid-column:1;grid-row:1}
+  .topbar-actions a[href^="mailto:"]{grid-column:1 / -1;grid-row:2;overflow-wrap:normal}
+  .theme-btn{grid-column:2;grid-row:1;align-self:center;width:2.25rem;height:2.25rem;min-height:2.25rem;font-size:.9rem}
+  .header-in{gap:.65rem;padding:.45rem 0}
+  .brand img{width:46px;height:46px}
+  .menu-btn{padding:.55rem .8rem}
+  nav.main a{padding:.55rem .75rem}
+  .hero-grid{gap:1.25rem;padding:1.25rem 0 1.6rem}
+  .hero h1{font-size:clamp(1.8rem,8vw,2.4rem)}
+  .cta-row{gap:.55rem}
+  .cta-row .btn{flex:1 1 100%}
+  section.block{padding:2rem 0}
+  .cards{gap:1rem;margin-top:1.25rem}
+  .card img{height:180px}
+  .card-body{padding:1rem 1.05rem 1.2rem}
+  .values{gap:.8rem;margin-top:1.2rem}
+  .page-hero{padding-top:1.5rem}
+  .detail-grid{gap:.85rem;margin-top:1.2rem}
+  .detail{padding:1.05rem}
+  .contact-card{padding:1rem}
+  .big-link{gap:.65rem;padding:.8rem}
+  .big-link b{font-size:.95rem}
+  .cta-banner{padding:1.35rem}
+  footer .cols{gap:1.2rem;padding:1.8rem 0 1.2rem}
+  .copyright{flex-direction:column;gap:.35rem}
+}
 </style>
 </head>
 <body>
 <div class="topbar"><div class="wrap">
   <span>Support Today, Greater Independence Tomorrow.</span>
-  <span><a href="tel:+13033357064">☎ (303) 335-7064</a> &nbsp;·&nbsp; <a href="mailto:unitedcarecenterinfo@gmail.com">✉ unitedcarecenterinfo@gmail.com</a></span>
+  <span class="topbar-actions"><a href="tel:+13033357064">☎ (303) 335-7064</a><span class="topbar-separator" aria-hidden="true">·</span><a href="mailto:unitedcarecenterinfo@gmail.com">✉ unitedcarecenterinfo@<wbr>gmail.com</a><button class="theme-btn" id="themeBtn" type="button" aria-label="Switch to dark theme" title="Switch theme">🌙</button></span>
 </div></div>
 
 <header class="site">
@@ -503,11 +580,11 @@ footer ul a:hover{text-decoration:underline}
         <h3>Send us a message</h3>
         <form id="contactForm">
           <label for="f-name">Your name</label>
-          <input id="f-name" name="name" type="text" autocomplete="name" required placeholder="Your full name" />
+          <input id="f-name" name="name" type="text" autocomplete="name" minlength="2" maxlength="100" required placeholder="Your full name" />
           <label for="f-phone">Phone (optional)</label>
-          <input id="f-phone" name="phone" type="tel" autocomplete="tel" placeholder="(303) 555-0100" />
+          <input id="f-phone" name="phone" type="tel" autocomplete="tel" maxlength="30" placeholder="(303) 555-0100" />
           <label for="f-email">Email</label>
-          <input id="f-email" name="email" type="email" autocomplete="email" required placeholder="you@example.com" />
+          <input id="f-email" name="email" type="email" autocomplete="email" maxlength="254" required placeholder="you@example.com" />
           <label for="f-service">I'm interested in</label>
           <select id="f-service" name="service">
             <option>Home &amp; Personal Support Services</option>
@@ -517,13 +594,14 @@ footer ul a:hover{text-decoration:underline}
             <option>Something else / Not sure yet</option>
           </select>
           <label for="f-msg">Message</label>
-          <textarea id="f-msg" name="message" required placeholder="Tell us a little about what support you're looking for…"></textarea>
+          <textarea id="f-msg" name="message" minlength="10" maxlength="1500" required placeholder="Tell us a little about what support you're looking for…"></textarea>
           <div class="cta-row" style="margin-top:1.1rem">
             <button class="btn btn-primary" type="submit">✉ Open in My Email App</button>
             <a class="btn btn-ghost" href="tel:+13033357064">☎ Call Instead</a>
           </div>
           <p class="form-note" id="formStatus" role="status" aria-live="polite" style="font-weight:800;color:var(--blue)"></p>
           <p class="form-note">This opens your email app with your message addressed to unitedcarecenterinfo@gmail.com — just press Send there. Prefer to write directly? Email us at <a href="mailto:unitedcarecenterinfo@gmail.com">unitedcarecenterinfo@gmail.com</a>.</p>
+          <p class="form-note"><strong>Privacy:</strong> Please do not include medical records, Social Security numbers, insurance details, or other sensitive health information in this form.</p>
         </form>
       </div>
     </div>
@@ -630,6 +708,32 @@ footer ul a:hover{text-decoration:underline}
     menuBtn.addEventListener('click', function(){
       var open = mainNav.classList.toggle('open');
       menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  }
+
+  var themeBtn = document.getElementById('themeBtn');
+  function updateThemeButton(){
+    if(!themeBtn) return;
+    var theme = document.documentElement.getAttribute('data-theme');
+    if(!theme){
+      theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    var next = theme === 'dark' ? 'light' : 'dark';
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+    themeBtn.setAttribute('aria-label', 'Switch to ' + next + ' theme');
+    themeBtn.setAttribute('title', 'Switch to ' + next + ' theme');
+  }
+  if(themeBtn){
+    updateThemeButton();
+    themeBtn.addEventListener('click', function(){
+      var current = document.documentElement.getAttribute('data-theme');
+      if(!current){
+        current = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      var next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem('ucc-theme', next); } catch(e) {}
+      updateThemeButton();
     });
   }
 
