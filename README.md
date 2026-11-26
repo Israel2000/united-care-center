@@ -24,6 +24,6 @@ Open `index.html` in a browser, or enable GitHub Pages on the `main` branch to p
 
 - Browser security headers are defined in `vercel.json` for Vercel deployments and `_headers` for Netlify-compatible hosting.
 - The site removes third-party font requests and uses local system fonts.
-- The contact form sends directly via `api/send.js` (Vercel serverless function) using Resend to `ibelete2000@gmail.com` and `unitedcarecenterinfo@gmail.com` — no email app needed. It requires `RESEND_API_KEY` set in Vercel (Production). Testing only: remove `ibelete2000@gmail.com` from `api/send.js` later and keep only the client address.
+- The contact form sends directly via `api/send.js` (Vercel serverless function) using Resend to `unitedcarecenterinfo@gmail.com` — no email app needed. It requires `RESEND_API_KEY` set in Vercel (Production).
 - The site supports automatic system light/dark colors and includes a persistent manual theme button.
 - Responsibility and security reporting instructions are published at `.well-known/security.txt`.
