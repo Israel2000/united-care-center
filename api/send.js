@@ -66,7 +66,10 @@ module.exports = async function handler(req, res) {
       },
       body: JSON.stringify({
         from: 'United Care Center <onboarding@resend.dev>',
-        to: ['unitedcarecenterinfo@gmail.com'],
+        // For now: send to the owner only (Resend onboarding domain only
+        // allows the account owner's email). Switch to the client address
+        // after a domain is verified in Resend.
+        to: ['ibelete2000@gmail.com'],
         reply_to: email,
         subject: 'Website inquiry — ' + service + ' — ' + name,
         text: text,
