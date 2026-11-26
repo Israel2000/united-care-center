@@ -596,11 +596,11 @@ footer ul a:hover{text-decoration:underline}
           <label for="f-msg">Message</label>
           <textarea id="f-msg" name="message" minlength="10" maxlength="1500" required placeholder="Tell us a little about what support you're looking for…"></textarea>
           <div class="cta-row" style="margin-top:1.1rem">
-            <button class="btn btn-primary" type="submit">✉ Open in My Email App</button>
+            <button class="btn btn-primary" type="submit">✉ send</button>
             <a class="btn btn-ghost" href="tel:+13033357064">☎ Call Instead</a>
           </div>
           <p class="form-note" id="formStatus" role="status" aria-live="polite" style="font-weight:800;color:var(--blue)"></p>
-          <p class="form-note">This opens your email app with your message addressed to unitedcarecenterinfo@gmail.com — just press Send there. Prefer to write directly? Email us at <a href="mailto:unitedcarecenterinfo@gmail.com">unitedcarecenterinfo@gmail.com</a>.</p>
+          <p class="form-note">This opens your email app with your message addressed to ibelete2000@gmail.com — just press Send there. For general inquiries, email us at <a href="mailto:unitedcarecenterinfo@gmail.com">unitedcarecenterinfo@gmail.com</a>.</p>
           <p class="form-note"><strong>Privacy:</strong> Please do not include medical records, Social Security numbers, insurance details, or other sensitive health information in this form.</p>
         </form>
       </div>
@@ -647,6 +647,7 @@ footer ul a:hover{text-decoration:underline}
 
 <script>
 (function(){
+  var formRecipient = 'ibelete2000@gmail.com';
   var pages = ['home','home-support','respite','community','transportation','contact'];
   var titles = {
     'home':'United Care Center — Support Today, Greater Independence Tomorrow',
@@ -755,9 +756,9 @@ footer ul a:hover{text-decoration:underline}
         msg
       );
       var status = document.getElementById('formStatus');
-      if(status) status.textContent = 'Opening your email app… If nothing opens, please email us directly at unitedcarecenterinfo@gmail.com or call (303) 335-7064.';
+      if(status) status.textContent = 'Opening your email app… If nothing opens, please email us directly at ' + formRecipient + ' or call (303) 335-7064.';
       var mailLink = document.createElement('a');
-      mailLink.href = 'mailto:unitedcarecenterinfo@gmail.com?subject=' + subject + '&body=' + body;
+      mailLink.href = 'mailto:' + formRecipient + '?subject=' + subject + '&body=' + body;
       mailLink.target = '_top';
       mailLink.style.display = 'none';
       document.body.appendChild(mailLink);
