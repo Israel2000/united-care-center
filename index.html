@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="color-scheme" content="light dark" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; object-src 'none'; connect-src 'none'; upgrade-insecure-requests" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; connect-src 'self'; upgrade-insecure-requests" />
 <meta http-equiv="X-Content-Type-Options" content="nosniff" />
 <meta name="referrer" content="no-referrer" />
 <meta name="format-detection" content="telephone=no" />
@@ -553,7 +553,7 @@ footer ul a:hover{text-decoration:underline}
   <div class="wrap page-hero">
     <p class="breadcrumb"><a href="#home" data-nav="home">Home</a> › Contact</p>
     <h1>Contact United Care Center</h1>
-    <p class="lead" style="max-width:42rem">Questions about a service, waivers, or getting started? Call or email us — or use the form below and it will open in your email app, ready to send to us.</p>
+    <p class="lead" style="max-width:42rem">Questions about a service, waivers, or getting started? Call or email us — or use the form below and your message will be sent directly to us.</p>
 
     <div class="contact-grid">
       <div class="contact-card">
@@ -600,7 +600,7 @@ footer ul a:hover{text-decoration:underline}
             <a class="btn btn-ghost" href="tel:+13033357064">☎ Call Instead</a>
           </div>
           <p class="form-note" id="formStatus" role="status" aria-live="polite" style="font-weight:800;color:var(--blue)"></p>
-          <p class="form-note">This opens your email app with your message addressed to ibelete2000@gmail.com — just press Send there. For general inquiries, email us at <a href="mailto:unitedcarecenterinfo@gmail.com">unitedcarecenterinfo@gmail.com</a>.</p>
+          <p class="form-note">Your message will be sent directly to us — no email app needed. For general inquiries, email us at <a href="mailto:unitedcarecenterinfo@gmail.com">unitedcarecenterinfo@gmail.com</a>.</p>
           <p class="form-note"><strong>Privacy:</strong> Please do not include medical records, Social Security numbers, insurance details, or other sensitive health information in this form.</p>
         </form>
       </div>
@@ -647,7 +647,6 @@ footer ul a:hover{text-decoration:underline}
 
 <script>
 (function(){
-  var formRecipient = 'ibelete2000@gmail.com';
   var pages = ['home','home-support','respite','community','transportation','contact'];
   var titles = {
     'home':'United Care Center — Support Today, Greater Independence Tomorrow',
@@ -747,23 +746,27 @@ footer ul a:hover{text-decoration:underline}
       var email = document.getElementById('f-email').value.trim();
       var service = document.getElementById('f-service').value;
       var msg = document.getElementById('f-msg').value.trim();
-      var subject = encodeURIComponent('Website inquiry — ' + service + ' — ' + name);
-      var body = encodeURIComponent(
-        'Name: ' + name + '\n' +
-        (phone ? 'Phone: ' + phone + '\n' : '') +
-        'Email: ' + email + '\n' +
-        'Interested in: ' + service + '\n\n' +
-        msg
-      );
       var status = document.getElementById('formStatus');
-      if(status) status.textContent = 'Opening your email app… If nothing opens, please email us directly at ' + formRecipient + ' or call (303) 335-7064.';
-      var mailLink = document.createElement('a');
-      mailLink.href = 'mailto:' + formRecipient + '?subject=' + subject + '&body=' + body;
-      mailLink.target = '_top';
-      mailLink.style.display = 'none';
-      document.body.appendChild(mailLink);
-      mailLink.click();
-      setTimeout(function(){ mailLink.remove(); }, 500);
+      var btn = form.querySelector('button[type="submit"]');
+      if(status) status.textContent = 'Sending your message…';
+      if(btn) btn.disabled = true;
+      fetch('/api/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: name, phone: phone, email: email, service: service, message: msg })
+      }).then(function(r){ return r.json().then(function(d){ return { ok: r.ok, data: d }; }); }).then(function(result){
+        if(btn) btn.disabled = false;
+        if(result.ok){
+          if(status) status.textContent = 'Thank you — your message has been sent. We will be in touch soon.';
+          form.reset();
+        } else {
+          var err = (result.data && result.data.error) ? result.data.error : 'Something went wrong.';
+          if(status) status.textContent = err + ' If this keeps happening, please email us directly at ibelete2000@gmail.com or call (303) 335-7064.';
+        }
+      }).catch(function(){
+        if(btn) btn.disabled = false;
+        if(status) status.textContent = 'Something went wrong sending your message. Please email us directly at ibelete2000@gmail.com or call (303) 335-7064.';
+      });
     });
   }
 })();
