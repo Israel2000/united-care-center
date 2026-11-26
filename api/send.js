@@ -66,7 +66,9 @@ module.exports = async function handler(req, res) {
       },
       body: JSON.stringify({
         from: 'United Care Center <onboarding@resend.dev>',
-        to: ['ibelete2000@gmail.com'],
+        // Testing: send to both the owner and the client inbox.
+        // Later, remove 'ibelete2000@gmail.com' and keep only the client address.
+        to: ['ibelete2000@gmail.com', 'unitedcarecenterinfo@gmail.com'],
         reply_to: email,
         subject: 'Website inquiry — ' + service + ' — ' + name,
         text: text,
