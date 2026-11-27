@@ -30,7 +30,9 @@ module.exports = async function handler(req, res) {
     'Home & Personal Support Services',
     'Respite Care',
     'Community-Based Skill Building & Social Support',
+    'Non-Emergency Medical (NEMT) Transportation',
     'Non-Medical (NMT) Transportation',
+    'Host Home',
     'Something else / Not sure yet',
   ];
 
